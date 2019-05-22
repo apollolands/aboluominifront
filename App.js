@@ -5,6 +5,7 @@ import MainMenu from './ui/main-menu';
 import PostList from './pages/post-list';
 import NewsDetail from "./pages/news-detail";
 import DiscountDetail from "./pages/discount-detail";
+import Login from './pages/login';
 
 type Props = {};
 
@@ -35,10 +36,17 @@ const AppNavigator = createStackNavigator({
     },
     DiscountDetail: {
         screen: DiscountDetail,
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        title: 'Login',
+        header: null
+      },
     }
 },
 {
-    initialRouteName: "Home"
+    initialRouteName: "Login"
 }
 );
 
