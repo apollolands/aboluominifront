@@ -37,7 +37,8 @@ export default class MainMenu extends Component<Props> {
                style={styles.menuItem}
                onPress={() => {
                  this.props.navigation.navigate('PostsList', {
-                   id: data.channel_id
+                   id: data.channel_id,
+                   name: data.name
                  })
                }}>
                <View>
