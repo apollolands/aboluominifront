@@ -5,6 +5,7 @@ INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/s
 INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml:1:1-26:12
 MERGED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from [:react-native-linear-gradient] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-gesture-handler] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-vector-icons] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.59.8] /Users/xiaohuiqi/.gradle/caches/transforms-1/files-1.1/react-native-0.59.8.aar/c8b9c3b68539fed35c714705e1287753/AndroidManifest.xml:2:1-13:12
@@ -131,6 +132,8 @@ uses-sdk
 INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/xiaohuiqi/Documents/workspace/aboluominifront/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-linear-gradient] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-linear-gradient] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] /Users/xiaohuiqi/Documents/workspace/aboluominifront/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41

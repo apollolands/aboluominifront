@@ -14,6 +14,10 @@ export default class Login extends Component<Props> {
   async componentWillMount() {
   }
 
+  login() {
+    this.props.navigation.navigate('Home');
+  }
+
   render() {
     return (
       <ImageBackground source={require('../image/login.jpeg')} style={styles.imageBg}>
@@ -37,6 +41,9 @@ export default class Login extends Component<Props> {
                 type="solid"
                 raised
                 title="登陆"
+                onPress={() => {
+                  this.login();
+                }}
                 buttonStyle={{padding: 10, borderRadius: 20, borderColor: '#db4538', backgroundColor: '#db4538'}}
               />
             </View>

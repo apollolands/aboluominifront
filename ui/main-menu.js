@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, ActivityIndicator, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, ScrollView, Text, View, FlatList, TouchableOpacity, Dimensions} from 'react-native';
 import rest from '../http/rest';
 import CarouselSlide from "./carousel-slider";
 import {Image, Divider, Card} from 'react-native-elements'
 import SearchBar from 'react-native-dynamic-search-bar';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 
 type Props = {navigation: Object};
 
@@ -32,10 +33,18 @@ export default class MainMenu extends Component<Props> {
     getMenuButtonComponents() {
         return this.state.data.channels.map((data) => {
            return (
-               <View style={styles.menuItem}>
+             <TouchableOpacity
+               style={styles.menuItem}
+               onPress={() => {
+                 this.props.navigation.navigate('PostsList', {
+                   id: data.channel_id
+                 })
+               }}>
+               <View>
                    <Image source={{uri: data.icon}} style={{width: 30, height: 30, alignSelf: 'center'}} />
                    <Text style={{alignSelf: 'center', fontSize: 12}}>{data.name}</Text>
                </View>
+             </TouchableOpacity>
            );
         });
     }
@@ -119,6 +128,51 @@ export default class MainMenu extends Component<Props> {
         );
     }
 
+    renderShimmerImageAndRows() {
+      let animatedAvatarReverseLoading = [];
+      return(
+        <View style={{ flexDirection: 'row-reverse', paddingTop: 30 }}>
+          <ShimmerPlaceHolder
+            ref={(ref) => animatedAvatarReverseLoading.push(ref)}
+            width={60}
+            height={60}
+            style={{ marginLeft: 16, borderRadius: 30}}
+            autoRun={true}
+          />
+          <View>
+            {this.renderShimmerRows(animatedAvatarReverseLoading, 3, 'reverse')}
+          </View>
+          <ShimmerPlaceHolder
+            ref={(ref) => animatedAvatarReverseLoading.push(ref)}
+            width={60}
+            height={60}
+            style={{ marginLeft: 16, marginRight: 16 }}
+            autoRun={true}
+          />
+        </View>
+      )
+    }
+
+    renderShimmerRows(loadingAnimated,number,uniqueKey) {
+      shimmerRows=[];
+      for(let index=0;index<number;index++ ){
+        shimmerRows.push(
+          <ShimmerPlaceHolder
+            key={`loading-${index}-${uniqueKey}`}
+            ref={(ref) => loadingAnimated.push(ref)}
+            width={200}
+            style={{ marginBottom: 7}}
+            autoRun={true}
+          />
+        )
+      }
+      return(
+        <View>
+          {shimmerRows}
+        </View>
+      )
+    }
+
     render() {
         if (this.state.data) {
             return (
@@ -150,9 +204,15 @@ export default class MainMenu extends Component<Props> {
                 </View>
             );
         } else {
+            const shimmerArray = [];
+            for (var i = 0; i<5; i++) {
+              shimmerArray.push(this.renderShimmerImageAndRows());
+              shimmerArray.push(<ShimmerPlaceHolder style={{width: 350, marginTop: 10, marginBottom: 10}} autoRun={true} />);
+              shimmerArray.push(<ShimmerPlaceHolder style={{width: 350, marginTop: 10, marginBottom: 10}} autoRun={true} />);
+            }
             return (
-                <View style={{flex: 1}}>
-                    <ActivityIndicator size="large"/>
+                <View style={styles.emptyContainer}>
+                  {shimmerArray}
                 </View>
             );
         }
@@ -160,6 +220,12 @@ export default class MainMenu extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+    emptyContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        width: '100%',
+        alignItems: 'center',
+    },
     menuRow: {
         display: 'flex',
         flexDirection: 'row',
