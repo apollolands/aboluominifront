@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, FlatList, Image} from 'react-native';
 import rest from '../http/rest';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {Divider} from 'react-native-elements';
 
 type Props = {navigation: Object};
 
@@ -92,7 +93,7 @@ export default class PostList extends Component<Props> {
     async fetchPostList(hasTab, index) {
       const i = hasTab? index : 0;
       return new Promise((resolve, reject) => {
-        rest.POST('Information/InformationList', `city_id=11&channel_id=${this.props.id}&type=${i}`).then((response) => {
+        rest.POST('Information/InformationList', `city_id=11&channel_id=${this.props.navigation.getParam('id', '265')}&type=${i}`).then((response) => {
           resolve(response.json())
         }).catch((error) => {
           console.error(error.message);
@@ -101,21 +102,48 @@ export default class PostList extends Component<Props> {
       });
     }
 
-    listView() {
+    renderListItem(data) {
       return (
-        <View>
-          <Text>123</Text>
+        <View key={data.index} style={{marginTop: 20}}>
+          <View style={{display: 'flex', flexDirection: 'row', margin: 10}}>
+            <View style={{width: 100}}>
+              <Image style={{height: 90, width: 90, borderRadius: 10}} source={{uri: data.item.picture}} />
+            </View>
+            <View style={{display: 'flex', flexGrow: 1, flexDirection: 'column', marginLeft: 10, marginRight: 15}}>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>{data.item.title}</Text>
+              <Text style={{fontSize: 14, marginTop: 5, lineHeight: 20, flexWrap: 'wrap', textAlign: 'left', flexGrow: 1, marginBottom: 5, marginRight: 90, paddingRight: 20}}>{data.item.content}</Text>
+              <Text style={{fontSize: 14}}>{data.item.amounts}</Text>
+            </View>
+          </View>
+          <Divider style={{marginLeft: 30, marginRight: 30, marginTop: 20, backgroundColor: 'grey' }} />
         </View>
       );
     }
 
-    genSceneMap() {
-      let result = {};
-      this.state.routes.map((route) => {
-        result[route.key] = SecondRoute;
-      });
-      return result;
-    }
+    renderScene = ({route}) => {
+      let index = parseInt(route.key) - 1;
+      if (this.state.tabs[index].posts && this.state.tabs[index].posts.length > 0) {
+        return (
+          <FlatList
+            style={{flex: 1}}
+            data = {this.state.tabs[index].posts}
+            renderItem = {this.renderListItem}
+          />
+        );
+      }
+      return (
+        <View>
+        </View>
+      );
+    };
+
+    // genSceneMap() {
+    //   let result = {};
+    //   this.state.routes.map((route) => {
+    //     result[route.key] = SecondRoute;
+    //   });
+    //   return result;
+    // }
 
     render() {
         if (this.state.tabs.length > 0) {
@@ -125,24 +153,22 @@ export default class PostList extends Component<Props> {
               </View>
             );
           } else {
-            let scenes = this.genSceneMap();
-            console.log(scenes);
             return (
               <TabView
                 renderTabBar={props =>
                   <TabBar
                     {...props}
                     style={{backgroundColor: 'white'}}
-                    indicatorStyle={{ backgroundColor:'blue'}}
+                    indicatorStyle={{ backgroundColor:'#db4538'}}
                     renderLabel={({ route, focused, color }) => (
-                      <Text style={{color: 'black', margin: 8, fontWeight: 'bold'}}>
+                      <Text style={{color: '#db4538', margin: 8, fontWeight: 'bold'}}>
                         {route.title}
                       </Text>
                     )}
                   />
                 }
                 navigationState={this.state}
-                renderScene={SceneMap(scenes)}
+                renderScene={this.renderScene}
                 onIndexChange={index => this.setState({index})}
                 initialLayout={{ width: Dimensions.get('window').width }}
               />
