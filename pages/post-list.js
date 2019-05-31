@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions, FlatList, Image} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, FlatList, Image, TouchableOpacity} from 'react-native';
 import rest from '../http/rest';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {Divider} from 'react-native-elements';
+import LoadingShimmer from '../ui/loading-shimmer';
 
 type Props = {navigation: Object};
-
-const FirstRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-);
-const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
 
 export default class PostList extends Component<Props> {
     state = {
@@ -104,19 +98,28 @@ export default class PostList extends Component<Props> {
 
     renderListItem(data) {
       return (
-        <View key={data.index} style={{marginTop: 20}}>
-          <View style={{display: 'flex', flexDirection: 'row', margin: 10}}>
-            <View style={{width: 100}}>
-              <Image style={{height: 90, width: 90, borderRadius: 10}} source={{uri: data.item.picture}} />
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('PostDetail', {
+              id: data.item.info_id,
+              isAd: data.item.is_ad,
+              title: data.item.type_name,
+            })
+          }}>
+          <View key={data.index} style={{marginTop: 20}}>
+            <View style={{display: 'flex', flexDirection: 'row', margin: 10}}>
+              <View style={{width: 100}}>
+                <Image style={{height: 90, width: 90, borderRadius: 10}} source={{uri: data.item.picture}} />
+              </View>
+              <View style={{display: 'flex', flexGrow: 1, flexDirection: 'column', marginLeft: 10, marginRight: 15}}>
+                <Text style={{fontWeight: 'bold', fontSize: 18}}>{data.item.title}</Text>
+                <Text style={{fontSize: 14, marginTop: 5, lineHeight: 20, flexWrap: 'wrap', textAlign: 'left', flexGrow: 1, marginBottom: 5, marginRight: 90, paddingRight: 20}}>{data.item.content}</Text>
+                <Text style={{fontSize: 14}}>价格 {data.item.amounts}</Text>
+              </View>
             </View>
-            <View style={{display: 'flex', flexGrow: 1, flexDirection: 'column', marginLeft: 10, marginRight: 15}}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>{data.item.title}</Text>
-              <Text style={{fontSize: 14, marginTop: 5, lineHeight: 20, flexWrap: 'wrap', textAlign: 'left', flexGrow: 1, marginBottom: 5, marginRight: 90, paddingRight: 20}}>{data.item.content}</Text>
-              <Text style={{fontSize: 14}}>{data.item.amounts}</Text>
-            </View>
+            <Divider style={{marginLeft: 30, marginRight: 30, marginTop: 20, backgroundColor: 'grey' }} />
           </View>
-          <Divider style={{marginLeft: 30, marginRight: 30, marginTop: 20, backgroundColor: 'grey' }} />
-        </View>
+        </TouchableOpacity>
       );
     }
 
@@ -127,13 +130,12 @@ export default class PostList extends Component<Props> {
           <FlatList
             style={{flex: 1}}
             data = {this.state.tabs[index].posts}
-            renderItem = {this.renderListItem}
+            renderItem = {this.renderListItem.bind(this)}
           />
         );
       }
       return (
-        <View>
-        </View>
+        <LoadingShimmer />
       );
     };
 

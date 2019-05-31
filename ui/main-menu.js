@@ -4,7 +4,7 @@ import rest from '../http/rest';
 import CarouselSlide from "./carousel-slider";
 import {Image, Divider, Card} from 'react-native-elements'
 import SearchBar from 'react-native-dynamic-search-bar';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
+import LoadingShimmer from './loading-shimmer';
 
 type Props = {navigation: Object};
 
@@ -58,8 +58,9 @@ export default class MainMenu extends Component<Props> {
                 iconColor="#c6c6c6"
                 shadowColor="#282828"
                 cancelIconColor="#c6c6c6"
-                backgroundColor="#353d5e"
+                backgroundColor="#f6f8fa"
                 placeholder="Search here"
+                cancelButtonDisable
                 onChangeText={text => {
 
                 }}
@@ -129,51 +130,6 @@ export default class MainMenu extends Component<Props> {
         );
     }
 
-    renderShimmerImageAndRows() {
-      let animatedAvatarReverseLoading = [];
-      return(
-        <View style={{ flexDirection: 'row-reverse', paddingTop: 30 }}>
-          <ShimmerPlaceHolder
-            ref={(ref) => animatedAvatarReverseLoading.push(ref)}
-            width={60}
-            height={60}
-            style={{ marginLeft: 16, borderRadius: 30}}
-            autoRun={true}
-          />
-          <View>
-            {this.renderShimmerRows(animatedAvatarReverseLoading, 3, 'reverse')}
-          </View>
-          <ShimmerPlaceHolder
-            ref={(ref) => animatedAvatarReverseLoading.push(ref)}
-            width={60}
-            height={60}
-            style={{ marginLeft: 16, marginRight: 16 }}
-            autoRun={true}
-          />
-        </View>
-      )
-    }
-
-    renderShimmerRows(loadingAnimated,number,uniqueKey) {
-      shimmerRows=[];
-      for(let index=0;index<number;index++ ){
-        shimmerRows.push(
-          <ShimmerPlaceHolder
-            key={`loading-${index}-${uniqueKey}`}
-            ref={(ref) => loadingAnimated.push(ref)}
-            width={200}
-            style={{ marginBottom: 7}}
-            autoRun={true}
-          />
-        )
-      }
-      return(
-        <View>
-          {shimmerRows}
-        </View>
-      )
-    }
-
     render() {
         if (this.state.data) {
             return (
@@ -205,28 +161,14 @@ export default class MainMenu extends Component<Props> {
                 </View>
             );
         } else {
-            const shimmerArray = [];
-            for (var i = 0; i<5; i++) {
-              shimmerArray.push(this.renderShimmerImageAndRows());
-              shimmerArray.push(<ShimmerPlaceHolder style={{width: 350, marginTop: 10, marginBottom: 10}} autoRun={true} />);
-              shimmerArray.push(<ShimmerPlaceHolder style={{width: 350, marginTop: 10, marginBottom: 10}} autoRun={true} />);
-            }
-            return (
-                <View style={styles.emptyContainer}>
-                  {shimmerArray}
-                </View>
-            );
+          return (
+            <LoadingShimmer />
+          );
         }
     }
 }
 
 const styles = StyleSheet.create({
-    emptyContainer: {
-        flex: 1,
-        backgroundColor: 'white',
-        width: '100%',
-        alignItems: 'center',
-    },
     menuRow: {
         display: 'flex',
         flexDirection: 'row',

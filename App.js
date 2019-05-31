@@ -6,6 +6,7 @@ import PostList from './pages/post-list';
 import NewsDetail from "./pages/news-detail";
 import DiscountDetail from "./pages/discount-detail";
 import Login from './pages/login';
+import PostDetail from './pages/post-detail';
 
 type Props = {};
 
@@ -43,7 +44,10 @@ const AppNavigator = createStackNavigator({
         title: 'Login',
         header: null
       },
-    }
+    },
+  PostDetail: {
+      screen: PostDetail,
+  }
 },
 {
     initialRouteName: "Login"
