@@ -98,6 +98,10 @@ export default class Post extends Component<Props> {
               })
             }}>
             <View style={{flex: 1}}>
+              <View style={{alignItems: 'flex-start', paddingLeft: 20, paddingTop: 10, backgroundColor: '#ffffff'}}>
+                <Text style={{fontSize: 18,  color: 'black', padding: 13}}>选择分类</Text>
+              </View>
+              <Divider style={{backgroundColor: 'grey' }} />
               {
                 this.state.genre.map((item, index) => (
                   <ListItem

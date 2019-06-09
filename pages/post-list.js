@@ -139,14 +139,14 @@ export default class PostList extends Component<Props> {
       );
     };
 
-    onTabChange = async (index) => {
-      console.log("here" + index);
+    async onTabChange(index) {
+      this.setState({index: index})
       if (index > 0 && !this.state.tabs[index].posts) {
+        console.log("123");
         let posts = await this.fetchPostList(this.state.tabs.length > 0, index + 1);
         let tabs = this.state.tabs;
-        tabs[index].posts = posts;
+        tabs[index].posts = posts.data.list;
         this.setState({
-          index: index,
           tabs: tabs,
         });
       }
@@ -170,7 +170,7 @@ export default class PostList extends Component<Props> {
           } else {
             return (
               <TabView
-                onIndexChange={this.onTabChange}
+                onIndexChange={(index) => this.onTabChange(index)}
                 renderTabBar={props =>
                   <TabBar
                     {...props}
@@ -185,7 +185,6 @@ export default class PostList extends Component<Props> {
                 }
                 navigationState={this.state}
                 renderScene={this.renderScene}
-                onIndexChange={index => this.setState({index})}
                 initialLayout={{ width: Dimensions.get('window').width }}
               />
             );
