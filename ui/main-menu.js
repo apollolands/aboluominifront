@@ -146,14 +146,14 @@ export default class MainMenu extends Component<Props> {
                     <Divider style={{marginLeft: 30, marginRight: 30, backgroundColor: 'grey' }} />
                     <View style={{display: 'flex', flexDirection: 'column', height: 190}}>
                         <View>
-                            <Text style={{fontSize: 18,  color: 'black', padding: 13}}>Discover discount around you</Text>
+                            <Text style={{fontSize: 18,  color: 'black', padding: 13}}>折扣</Text>
                         </View>
                         <View>
                             {this.getScrollListDiscount()}
                         </View>
                     </View>
                     <View style={{display: 'flex', flexDirection: 'column'}}>
-                        <Text style={{fontSize: 18,  color: 'black', padding: 13}}>Find out what's happening</Text>
+                        <Text style={{fontSize: 18,  color: 'black', padding: 13}}>生活锦囊</Text>
                         <View>
                             {this.getScrollListNews()}
                         </View>

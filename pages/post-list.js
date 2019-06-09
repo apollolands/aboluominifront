@@ -139,6 +139,19 @@ export default class PostList extends Component<Props> {
       );
     };
 
+    onTabChange = async (index) => {
+      console.log("here" + index);
+      if (index > 0 && !this.state.tabs[index].posts) {
+        let posts = await this.fetchPostList(this.state.tabs.length > 0, index + 1);
+        let tabs = this.state.tabs;
+        tabs[index].posts = posts;
+        this.setState({
+          index: index,
+          tabs: tabs,
+        });
+      }
+    }
+
     // genSceneMap() {
     //   let result = {};
     //   this.state.routes.map((route) => {
@@ -157,6 +170,7 @@ export default class PostList extends Component<Props> {
           } else {
             return (
               <TabView
+                onIndexChange={this.onTabChange}
                 renderTabBar={props =>
                   <TabBar
                     {...props}
